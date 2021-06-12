@@ -1,4 +1,8 @@
 <!DOCTYPE html> <!-- is this even necessary?-->
+<!--
+TODO:
+* Add tracklist to change songs
+-->
 <html>
     <head>
         <title>Dackie</title>
@@ -49,7 +53,8 @@
         <p id="undertext" style="color: #7F7F7F; opacity:0"><i>My own personal hell</i></p>
         <button onclick="funkyButton()" id="funky" style="display:none;">Jam'</button>
         <img id="reimu" src="images/reimu.gif" alt="Reimu spinning" style="opacity:0;">
-        <audio id="funkymusic">
+        <p id="counter" style="opacity:0"></p>
+        <audio id="funkymusic" loop>
             <source src="music/funky.mp3" type="audio/mpeg">
             Your browser does not support mp3.
         </audio>
@@ -57,6 +62,8 @@
     <script>
         var music = document.getElementById("funkymusic");
         music.volume=0; //Start volume at 0 to avoid loud shit
+        var time = 0;
+
         function funkyButton(){ //Button function to play music and play gif, and rainbow background
             var element = document.getElementById("funky");
             if(element.innerHTML === "Jam'"){ //Reads button text for start / stop determination
@@ -66,6 +73,7 @@
                 music.play();
                 $("#funkymusic").animate({volume: 0.1},3500);
                 backgroundWave(true);
+                timer(true);
             }
             else{ //when button text is "stop" and is pressed, fades out music and gif and reverts background.
                 element.innerHTML = "Jam'";
@@ -73,6 +81,7 @@
                 $("#funkymusic").animate({volume: 0.0},3000);
                 setTimeout(function(){music.pause();},3000);
                 backgroundWave(false);
+                timer(false);
             }
         }
         
@@ -113,6 +122,22 @@
                 },3000);
             }
         }
+
+        function timer(getstate){ //Self explanatory
+            if(getstate){
+                var element = document.getElementById("counter");
+                setTimeout(function(){$("#counter").fadeTo(3000,1)},3000);
+                counter = setInterval(function(){
+                    time++;
+                    element.innerHTML=time.toString();
+                },1000);
+            }
+            else{
+                clearInterval(counter);
+                setTimeout(function(){$("#counter").fadeOut(2000,0)},3000); //Did you notice i like fading shit?
+            }
+        }
+
         $(document).ready(function(){
             $('#rubrik').fadeTo(2500,1,function(){ //Dackie text at top
                 $('#undertext').fadeTo(2500,1,function(){ //The text underneath
