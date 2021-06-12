@@ -1,11 +1,15 @@
+<!DOCTYPE html> <!-- is this even necessary?-->
 <html>
     <head>
         <title>Dackie</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device.width">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <style>
         body{
             font-family: Bahnschrift, Corbel, 'Segoe UI';
-            background-color: azure;
+            background-color: #ba9bcc;
             text-align: center;
         }
         footer {
@@ -22,23 +26,92 @@
             width: 35%;
             height: auto;
         }
+        #reimu { /* No clue how or why this shit works */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
         </style>
     </head>
-    <body>
-        <h1 id="rubrik" style="color: #6b6b6b; display: none"><b>Dackie</b></h1>
-        <p id="undertext" style="color: #7F7F7F; display: none"><i>Testing shit loool</i></p>
-        <img id="duck" src="images/duck.png" alt="Fuck You" style="display: none">
+    <body id="mage">
+        <h1 id="rubrik" style="color: #6b6b6b; opacity:0"><b>Dackie</b></h1>
+        <p id="undertext" style="color: #7F7F7F; opacity:0"><i>My own personal hell</i></p>
+        <button onclick="funkyButton()" id="funky" style="display:none;">Jam'</button>
+        <img id="reimu" src="images/reimu.gif" alt="Reimu spinning" style="opacity:0;">
+        <audio id="funkymusic">
+            <source src="music/funky.mp3" type="audio/mpeg">
+            Your browser does not support mp3.
+        </audio>
     </body>
     <script>
+        var music = document.getElementById("funkymusic");
+        music.volume=0; //Start volume at 0 to avoid loud shit
+        function funkyButton(){ //Button function to play music and play gif, and rainbow background
+            var element = document.getElementById("funky");
+            if(element.innerHTML === "Jam'"){ //Reads button text for start / stop determination
+                element.innerHTML = 'Stop'; //Sets text to stop so same button can be used for both.
+                $("#reimu").fadeTo(2000,1);
+                music.load();
+                music.play();
+                $("#funkymusic").animate({volume: 0.1},3500);
+                backgroundWave(true);
+            }
+            else{ //when button text is "stop" and is pressed, fades out music and gif and reverts background.
+                element.innerHTML = "Jam'";
+                $("#reimu").fadeOut(3000);
+                $("#funkymusic").animate({volume: 0.0},3000);
+                setTimeout(function(){music.pause();},3000);
+                backgroundWave(false);
+            }
+        }
+        
+        function backgroundWave(getstate){ //Clusterfuck abomination but it works so i'll use it
+            var delay = 1500; //1.5sec between each transition
+            if(getstate){ //Rainbow wave
+                $("#mage").animate({
+                    backgroundColor: "rgb(155,155,204)"
+                },delay, function(){
+                    $("#mage").animate({
+                        backgroundColor: "rgb(155,204,204)"
+                    },delay, function(){
+                        $("#mage").animate({
+                            backgroundColor: "rgb(155,204,155)"
+                        },delay, function(){
+                            $("#mage").animate({
+                                backgroundColor: "rgb(204,204,155)"
+                            },delay, function(){
+                                $("#mage").animate({
+                                    backgroundColor: "rgb(204,155,155)"
+                                },delay, function(){
+                                    $("#mage").animate({
+                                        backgroundColor: "rgb(204,155,204)"
+                                    },delay, function(){
+                                        $("#mage").animate({
+                                            backgroundColor: "rgb(186,155,204)"
+                                        },delay, backgroundWave(true));
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            }
+            else{ //Halts animation, and animates back to original #ba9bcc in rgb
+                $("#mage").stop(false,false).animate({
+                    backgroundColor: "rgb(186,155,204)"
+                },3000);
+            }
+        }
         $(document).ready(function(){
-            $('#rubrik').fadeIn(2500,function(){ //Dackie text at top
-                $('#undertext').fadeIn(2500,function(){ //The text underneath
-                    $('#duck').slideDown(1000); // Fuck you 
+            $('#rubrik').fadeTo(2500,1,function(){ //Dackie text at top
+                $('#undertext').fadeTo(2500,1,function(){ //The text underneath
+                    $('#funky').slideDown(1500); // Funky Button 
                 });
             });
         });
     </script>
     <footer>
-        <i>2021 - Dackie</i>
+        <i>2021 - <a href="https://twitter.com/zxz_regular" target="_blank">Dackie</a></i> <!-- Sellout -->
     </footer>
 </html>
