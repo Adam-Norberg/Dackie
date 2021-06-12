@@ -1,15 +1,44 @@
 <html>
     <head>
+        <title>Dackie</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <style>
         body{
             font-family: Bahnschrift, Corbel, 'Segoe UI';
             background-color: azure;
             text-align: center;
         }
+        footer {
+            font-family: sans-serif;
+            color: gray;
+            text-align: center;
+            font-size: 12px;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        img {
+            width: 35%;
+            height: auto;
+        }
         </style>
     </head>
     <body>
-        <h1 style="color: #6b6b6b;"><b>Dackie</b></h1>
-        <p style="color: #7F7F7F;"><i>Testing shit loool</i></p>
-    </body> 
+        <h1 id="rubrik" style="color: #6b6b6b; display: none"><b>Dackie</b></h1>
+        <p id="undertext" style="color: #7F7F7F; display: none"><i>Testing shit loool</i></p>
+        <img id="duck" src="images/duck.png" alt="Fuck You" style="display: none">
+    </body>
+    <script>
+        $(document).ready(function(){
+            $('#rubrik').fadeIn(2500,function(){ //Dackie text at top
+                $('#undertext').fadeIn(2500,function(){ //The text underneath
+                    $('#duck').slideDown(1000); // Fuck you 
+                });
+            });
+        });
+    </script>
+    <footer>
+        <i>2021 - Dackie</i>
+    </footer>
 </html>
