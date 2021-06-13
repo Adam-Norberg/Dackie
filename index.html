@@ -2,6 +2,7 @@
 <!--
 TODO:
 * Add tracklist to change songs
+* Seperate html, css and javascript since this file is a hellhole
 -->
 <html>
     <head>
@@ -59,14 +60,13 @@ TODO:
         </div>
         <img id="reimu" src="images/reimu.gif" alt="Reimu spinning" style="opacity:0;">
         <p id="counter" style="opacity:0"></p>
-        <audio id="funkymusic" loop>
+        <audio onended="smoothrepeat()" id="funkymusic">
             <source src="music/funky.mp3" type="audio/mpeg">
             Your browser does not support mp3.
         </audio>
     </body>
     <script>
         var music = document.getElementById("funkymusic");
-        music.volume=0.1; //Start at low to avoid loud shit
         var musicvolume=0.1; //Start at low to avoid loud shit
         var time = 0;
 
@@ -76,18 +76,7 @@ TODO:
                 element.innerHTML = 'Stop'; //Sets text to stop so same button can be used for both.
                 $("#reimu").fadeTo(2000,1);
                 setTimeout(function(){$("#settingsbutton").fadeTo(1000,1)},3500);
-                music.onended = function(){ //Smooth repeat which took several fucking hours for some reason
-                    music.volume=0.0;
-                    $("#funkymusic").animate({volume: musicvolume},3000);
-                    setTimeout(function(){
-                        $("#funkymusic").animate({volume: 0.0},3000);
-                    },136000);
-                }
-                music.load();
-                music.play();
-                music.volume=0.0; //Start at 0 and climb to musicvolume below
-                $("#funkymusic").animate({volume: musicvolume},3000); //Smooth start
-                setTimeout(function(){$("#funkymusic").animate({volume: 0.0},3000)},136000); //Smooth end
+                smoothrepeat();
                 backgroundWave(true);
                 timer(true);
             }
@@ -95,10 +84,18 @@ TODO:
                 element.innerHTML = "Jam'";
                 $("#reimu").fadeOut(3000);
                 $("#funkymusic").animate({volume: 0.0},3000);
+                $("#funkymusic").finish(true,true);
                 setTimeout(function(){music.pause();},3000);
                 backgroundWave(false);
                 timer(false);
             }
+        }
+        function smoothrepeat(){ //Self explanatory but still took several fucking hours somehow
+            music.load();
+            music.play();
+            music.volume=0.0;
+            $("#funkymusic").animate({volume: musicvolume},3000); //Smooth start
+            setTimeout(function(){$("#funkymusic").animate({volume: 0.0},3000);},136000); //Smooth end
         }
         
         function backgroundWave(getstate){ //Clusterfuck abomination but it works so i'll use it
@@ -156,13 +153,13 @@ TODO:
         var setstate=true;
         function settings(){
             if(setstate){
-                $("#increasevolume").fadeTo(1500,1);
-                setTimeout(function(){$("#decreasevolume").fadeTo(1500,1)},1000);
+                $("#increasevolume").fadeTo(1000,1);
+                setTimeout(function(){$("#decreasevolume").fadeTo(1000,1)},750);
                 setstate = !setstate;
             }
             else{
-                setTimeout(function(){$("#increasevolume").fadeOut(1500,0)},1000);
-                $("#decreasevolume").fadeOut(1500,0);
+                setTimeout(function(){$("#increasevolume").fadeOut(1000,0)},750);
+                $("#decreasevolume").fadeOut(1000,0);
                 setstate = !setstate;
             }
         }
