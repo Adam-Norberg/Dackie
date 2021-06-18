@@ -1,7 +1,7 @@
 var music = document.getElementById("funkymusic");
 var musicvolume=0.1; //Start at low to avoid loud shit
 var time = 0;
-var setstate=true; //For the "settings" function
+var settingstate=true; //For the "settings" function
 
 function funkyButton(){ //Button function to play music and play gif, and rainbow background
     var element = document.getElementById("funky");
@@ -9,7 +9,7 @@ function funkyButton(){ //Button function to play music and play gif, and rainbo
         element.innerHTML = 'Stop'; //Sets text to stop so same button can be used for both.
         $("#reimu").fadeTo(2000,1);
         setTimeout(function(){$("#settingsbutton").fadeTo(1000,1)},3500);
-        music.play();
+        smoothrepeat();
         backgroundWave(true);
         timer(true);
     }
@@ -25,6 +25,8 @@ function funkyButton(){ //Button function to play music and play gif, and rainbo
 }
 function smoothrepeat(){ //Self explanatory but still took several fucking hours somehow
     music.volume=0.0;
+    music.currentTime = 0;
+    music.play();
     $("#funkymusic").animate({volume: musicvolume},3000); //Smooth start
     setTimeout(function(){$("#funkymusic").animate({volume: 0.0},3000);},136000); //Smooth end
 }
@@ -84,15 +86,15 @@ function timer(getstate){ //Self explanatory
     }
 }
 function settings(){ //Settings button
-    if(setstate){ //Show volume input
+    if(settingstate){ //Show volume input
         $("#volumeinput").fadeTo(750, 1);
         setTimeout(function(){$("#volumesubmit").fadeTo(750,1);},250);
-        setstate = !setstate;
+        settingstate = !settingstate;
     }
     else{ //Hide them
         setTimeout(function(){$("#volumeinput").fadeOut(750,0,function(){$("#volumeinput").css({"display":"inline-block","opacity":"0"})});},250);
         $("#volumesubmit").fadeOut(750,0,function(){$("#volumesubmit").css({"display":"inline-block","opacity":"0"})});
-        setstate = !setstate;
+        settingstate = !settingstate;
         /*Fuck jquery
         i just want to have them not fuck with the spacing after disappearing,
         but fucking fadeout turns opacity from 1 to 0 AND THEN to 1 SINCE DISPLAY IS NONE!!!
@@ -108,6 +110,17 @@ function mixer(setvol){ //Apply new volume
     $("#funkymusic").animate({volume: setvol/100},500);
     document.getElementById("volumeinput").placeholder=setvol + "%"; //Note to self: Don't use toString
     document.getElementById("volumeinput").value="";
+}
+
+function about(getstate){ //The about me sidebar
+    if(getstate=="open"){
+        document.getElementById("sidebar").style.width = "250px";
+        document.getElementById("mage").style.marginRight = "250px";
+    }
+    else{
+        document.getElementById("sidebar").style.width = "0";
+        document.getElementById("mage").style.marginRight = "0";
+    }
 }
 
 $(document).ready(function(){
