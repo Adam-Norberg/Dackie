@@ -1,27 +1,54 @@
 body{
     font-family: Bahnschrift, Corbel, 'Segoe UI';
-    background-color: #ba9bcc;
+    /*background-color: #ba9bcc; */
+    background-color: hsl(278,32%,70%);
     text-align: center;
 }
 footer {
     font-family: sans-serif;
-    color: gray;
+    color: #404040;
     text-align: center;
     font-size: 12px;
     position: fixed;
-    left: 0;
+    left: 0px;
     bottom: 0;
     width: 100%;
 }
-img {
-    max-width: 100%;
-    max-height: 100vh;
-    margin-top:0px;
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #967DA5;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
 }
-#reimu { /* No clue how or why this shit works */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.sidebar a p {
     display: block;
+    color: gray;
+    transition: 0.3s;
+}
+.sidebar a:hover {
+    color: white;
+}
+.sidebar .closebtn {
+    position: absolute;
+    top: 0px;
+    left: 25px;
+    font-size: 36px;
+    margin-right: 50px;
+}
+
+.settings {
+    display: inline-block;
+}
+
+#reimu{ /* 2 hours for this LOL i just wanted the image to scale!!! */
+    height:50vh;
+    width:auto;
+    margin:auto;
 }
