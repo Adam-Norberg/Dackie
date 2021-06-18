@@ -1,6 +1,7 @@
 var music = document.getElementById("funkymusic");
 var musicvolume=0.1; //Start at low to avoid loud shit
 var time = 0;
+var setstate=true; //For the "settings" function
 
 function funkyButton(){ //Button function to play music and play gif, and rainbow background
     var element = document.getElementById("funky");
@@ -29,6 +30,7 @@ function smoothrepeat(){ //Self explanatory but still took several fucking hours
 }
 
 //TODO: CHANGE TO HSV
+//UPDATE: IT MADE EVERYTHING WHITE, I'LL USE THIS MONSTER INSTEAD
 function backgroundWave(getstate){ //Clusterfuck abomination but it works so i'll use it
     var delay = 1500; //1.5sec between each transition
     if(getstate){ //Rainbow wave
@@ -81,7 +83,6 @@ function timer(getstate){ //Self explanatory
         setTimeout(function(){$("#counter").fadeOut(2000,0)},3000); //Did you notice i like fading shit?
     }
 }
-var setstate=true;
 function settings(){ //Settings button
     if(setstate){ //Show volume input
         $("#volumeinput").fadeTo(750, 1);
